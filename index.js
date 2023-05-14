@@ -61,7 +61,8 @@ async function run() {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) }
             const options = { upsert: true }
-            const updatedCoffee = {
+            const updatedCoffee = req.body;
+            const coffee = {
                 $set: {
                     name: updatedCoffee.name,
                     quantity: updatedCoffee.quantity,
@@ -72,6 +73,8 @@ async function run() {
                     photo: updatedCoffee.photo
                 }
             }
+            const result = await coffeeCollection.updateOne(filter, coffee, options)
+            res.send(result)
         })
 
 
